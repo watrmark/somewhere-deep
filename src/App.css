@@ -1,24 +1,29 @@
 .App {
   text-align: center;
-  color: rgb(5, 17, 17);
-  background: rgb(26, 49, 56);
+  background: rgb(16, 35, 40);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.main-page {
-  background:  rgb(26, 49, 56); 
+  color: rgb(84, 160, 163);
 }
 
 .navbar-custom {
-  background-color: rgb(26, 49, 56); /* Replace with your desired color */
-  padding: 1rem 0; /* Increase the top and bottom padding to make the navbar taller */
+  background-color: rgb(12, 23, 26);
+  padding: 1rem 0; 
 }
 
 .navbar-custom .navbar-brand,
 .navbar-custom .nav-link {
   color: rgb(84, 160, 163); 
+}
+
+.navbar-custom .nav-link:hover{
+  color: rgb(43, 237, 244);
+  text-decoration: underline;
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: rgb(43, 237, 244);
 }
 
 .navbar-custom .container {
@@ -36,6 +41,8 @@
 
 .entry-content {
   flex-grow: 1;
+  background-color: rgb(16, 35, 40);
+  color: rgb(28, 152, 156);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,12 +52,13 @@
 .entry-title {
   cursor: pointer;
   margin: 0;
-  font-size: 2em;
-  transition: color 0.5s;
+  font-size: 1em;
+  transition: color 0.3s;
+  color: rgb(28, 152, 156);
 }
 
 .entry-title:hover {
-  color: rgb(61, 120, 140);
+  color: rgb(43, 237, 244);
 }
 
 .post-card {

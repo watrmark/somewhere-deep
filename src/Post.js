@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import Navbar from './Navbar';
+import Navbar from './Navbar.js';
 import './App.css';
 
 const Post = () => {

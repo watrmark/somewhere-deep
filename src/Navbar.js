@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Link } from "react-router-dom";
-import { SITE_TITLE } from './site_config';
+import { SITE_TITLE } from './site_config.js';
 
 function Navbar() {
   return (
