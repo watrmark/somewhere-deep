@@ -24,7 +24,8 @@ app.use(cors({ origin: true }));
 app.use(helmet());
 
 const buildPath = path.join(__dirname, BUILD_PATH);
-const postsPath = path.join(__dirname, '..', 'src', 'content', 'posts');
+const postsPath = path.join(__dirname, POSTS_PATH);
+
 
 console.log('Starting server...');
 console.log('Current directory:', process.cwd());
