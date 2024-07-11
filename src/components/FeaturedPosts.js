@@ -7,26 +7,29 @@ const FeaturedPosts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/featured-posts')
-      .then(response => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/featured-posts');
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorText = await response.text();
+          throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
         }
-        return response.json();
-      })
-      .then(data => {
+        const data = await response.json();
         setFeaturedPosts(data);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching featured posts:', error);
-        setError('Failed to load featured posts. Please try again later.');
+        setError(`Failed to load featured posts: ${error.message}`);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   if (loading) return <div>Loading featured posts...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (featuredPosts.length === 0) return <div>No featured posts available.</div>;
 
   return (
     <div className="featured-posts">
