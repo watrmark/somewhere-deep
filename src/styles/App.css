@@ -1,0 +1,285 @@
+@font-face {
+  font-family: 'Calibri';
+  src: url('https://websim.ai/fonts/calibri.woff2') format('woff2'),
+    url('https://websim.ai/fonts/calibri.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body,
+#root {
+  background-color: rgb(6, 24, 26);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: 'Calibri', Arial, sans-serif;
+  background-color: #0f2328;
+  color: #b0e0e6;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+body,
+body * {
+  color: #b0e0e6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #e0ffff;
+}
+
+#about h3,
+#series h3,
+#featured-posts h3 {
+  color: #e0ffff;
+  font-weight: 600;
+  font-size: calc(1.3rem + .9vw);
+  margin-top: 0.7em;
+  margin-bottom: 0.8em;
+}
+
+#about-content p,
+#series-content p,
+#featured-posts-content p {
+  color: #b0e0e6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+header {
+  text-align: center;
+  padding: 40px 0;
+  border-bottom: 2px solid #b0e0e6;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: #e0ffff;
+  font-weight: 100;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+nav {
+  margin-top: 20px;
+}
+
+nav a {
+  color: #b0e0e6;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+nav a:hover {
+  border-bottom: 2px solid #b0e0e6;
+}
+
+nav a.active {
+  font-weight: bold;
+  color: #e0ffff;
+  border-bottom: 2px solid #e0ffff;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+h3 {
+  color: #e0ffff;
+  font-size: calc(1.3rem + .9vw);
+  ;
+  border-bottom: 1px solid #b0e0e6;
+  padding-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  font-weight: 500;
+
+}
+
+.arrow {
+  border: solid #b0e0e6;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 6px;
+  transition: transform 0.3s ease;
+}
+
+.arrow-right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.arrow-down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+/* Keep your existing styles for blog posts, series, etc. */
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 2px solid #b0e0e6;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Blog post summary styles */
+.blog-post-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.blog-post-summary:hover {
+  background-color: rgba(176, 224, 230, 0.1);
+}
+
+/* Blog post content styles */
+.blog-post-content {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* Blog post info styles */
+.blog-post-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.blog-post-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #e0ffff;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #b0e0e6;
+}
+
+.excerpt {
+  color: #b0e0e6;
+  margin: 0;
+}
+
+/* Thumbnail styles */
+.blog-thumbnail-container {
+  width: 250px;
+  height: 250px;
+  margin-right: 1;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.blog-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Full post styles */
+.full-post {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.post-thumbnail {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .blog-post-summary {
+    flex-direction: column;
+  }
+
+  .blog-post-content {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .blog-thumbnail-container {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+.collapsible-section {
+  margin-bottom: 20px;
+}
+
+.collapsible-title {
+  color: #e0ffff;
+  font-size: calc(1.3rem + .9vw);
+  font-weight: 700;
+  border-bottom: 1px solid #b0e0e6;
+  padding-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}

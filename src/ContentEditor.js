@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from "rehype-raw";
 import axios from 'axios';
 
 function ContentEditor({ fileName }) {
@@ -35,7 +36,7 @@ function ContentEditor({ fileName }) {
     <div>
       <textarea value={markdownContent} onChange={handleContentChange} />
       <button onClick={handleSave}>Save</button>
-      <ReactMarkdown>{markdownContent}</ReactMarkdown>
+      <ReactMarkdown className="markdown-content" rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
     </div>
   );
 }
