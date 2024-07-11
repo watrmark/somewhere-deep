@@ -9,14 +9,14 @@ app.use(cors());
 app.use(express.json());
 
 // Test route
-router.get('/api/test', (req, res) => {
-  console.log('Received request to /api/test');
+router.get('/test', (req, res) => {
+  console.log('Received request to /test');
   res.json({ message: 'API is working' });
 });
 
 // Simple posts route
-router.get('/api/posts', (req, res) => {
-  console.log('Received request to /api/posts');
+router.get('/posts', (req, res) => {
+  console.log('Received request to /posts');
   res.json([
     { id: 1, title: 'Test Post 1', content: 'This is a test post.' },
     { id: 2, title: 'Test Post 2', content: 'This is another test post.' }
@@ -24,8 +24,8 @@ router.get('/api/posts', (req, res) => {
 });
 
 // Simple featured posts route
-router.get('/api/featured-posts', (req, res) => {
-  console.log('Received request to /api/featured-posts');
+router.get('/featured-posts', (req, res) => {
+  console.log('Received request to /featured-posts');
   res.json([
     { id: 1, title: 'Featured Test Post', content: 'This is a featured test post.' }
   ]);
