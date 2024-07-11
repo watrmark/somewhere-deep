@@ -32,7 +32,9 @@
     "eject": "react-scripts eject",
     "server": "node ./server/server.mjs",
     "start": "react-scripts start",
-    "dev": "concurrently \"npm run start\" \"npm run react-start\""
+    "dev": "concurrently \"npm run start\" \"npm run react-start\"",
+    "build:server": "echo 'No build step needed for server'",
+    "start:prod": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [

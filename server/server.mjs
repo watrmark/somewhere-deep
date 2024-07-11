@@ -20,7 +20,7 @@ const POSTS_PATH = process.env.POSTS_PATH || '../src/content/posts';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true }));
 app.use(helmet());
 
 const buildPath = path.join(__dirname, BUILD_PATH);
