@@ -15,7 +15,7 @@ const router = express.Router();
 app.use(cors());
 app.use(express.json());
 
-const postsDirectory = path.join(__dirname, '..', 'src', 'content', 'posts');
+const postsDirectory = path.join(__dirname, 'src', 'content', 'posts');
 
 // Helper function to read posts
 const getPosts = () => {
@@ -65,7 +65,17 @@ router.get('/featured-posts', (req, res) => {
   res.json(featuredPosts.map(({ content, ...rest }) => rest)); // Exclude content for list view
 });
 
+// Use the router for /api routes
 app.use('/api', router);
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'build')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
