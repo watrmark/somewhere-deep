@@ -10,14 +10,14 @@ const mockPosts = [
     title: 'Mock Post 1',
     date: '2024-07-11',
     excerpt: 'This is a mock post for testing purposes.',
-    thumbnail: '/images/default-thumbnail.jpg'
+    thumbnail: '/images/bingopolisthumbnail.png'
   },
   {
     slug: 'mock-post-2',
     title: 'Mock Post 2',
     date: '2024-07-12',
     excerpt: 'This is another mock post for testing purposes.',
-    thumbnail: '/images/default-thumbnail.jpg'
+    thumbnail: '/images/bingopolisthumbnail.png'
   }
 ];
 

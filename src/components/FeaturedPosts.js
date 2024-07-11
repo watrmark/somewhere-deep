@@ -17,7 +17,7 @@ const mockFeaturedPosts = [
     title: 'Mock Featured Post 2',
     date: '2024-07-12',
     excerpt: 'This is another mock featured post for testing purposes.',
-    thumbnail: '/images/bingopolisthumbnail.pngg'
+    thumbnail: '/images/bingopolisthumbnail.png'
   }
 ];
 
