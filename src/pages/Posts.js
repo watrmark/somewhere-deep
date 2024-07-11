@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
 
-// Mock data to display when API is unavailable
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? (process.env.REACT_APP_API_URL || '') 
+  : 'http://localhost:5001';
+
 const mockPosts = [
   {
     slug: 'mock-post-1',
@@ -28,7 +31,7 @@ const Posts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('/api/posts');
+        const response = await fetch(`${API_URL}/api/posts`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

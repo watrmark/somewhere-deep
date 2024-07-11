@@ -143,9 +143,3 @@ app.get('/api/featured-posts', (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
-
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-  console.log(`Serving static files from: ${buildPath}`);
-  console.log(`Reading posts from: ${postsPath}`);
-});
