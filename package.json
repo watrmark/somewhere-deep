@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node ./server/server.mjs",
+    "server": "node ./server/index.js",
     "build:server": "echo 'No build step needed for server'",
     "start:prod": "node server/index.js"
   },
