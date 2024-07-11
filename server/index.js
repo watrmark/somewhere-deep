@@ -8,3 +8,5 @@ app.listen(port, () => {
 });
 
 console.log('After app.listen call');
+
+export {app}
