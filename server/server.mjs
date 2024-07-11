@@ -34,6 +34,11 @@ console.log('POSTS_PATH:', POSTS_PATH);
 console.log('buildPath:', buildPath);
 console.log('postsPath:', postsPath);
 
+app.use((req, res, next) => {
+  console.log(`Received request: ${req.method} ${req.url}`);
+  next();
+});
+
 if (!fs.existsSync(buildPath)) {
   console.error(`Build directory not found: ${buildPath}`);
   process.exit(1);
@@ -146,13 +151,7 @@ app.get('/api/featured-posts', (req, res) => {
     console.error('Fetch error:', error);
     if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
       console.error('This might be a CORS or network issue');
-    }
-    setError(error.toString());
-    setFeaturedPosts(mockFeaturedPosts);
-    setLoading(false);
-    console.error('Error reading featured posts:', error);
-    res.status(500).json({ error: 'Internal server error', details: error.toString() });
-  
+    }  
   }
 });
 
