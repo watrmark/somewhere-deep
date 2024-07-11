@@ -69,12 +69,11 @@ router.get('/featured-posts', (req, res) => {
 app.use('/api', router);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// The "catchall" handler
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'src', 'public', 'index.html'));
 });
 
 app.listen(port, () => {
