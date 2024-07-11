@@ -10,14 +10,14 @@ const mockFeaturedPosts = [
     title: 'Mock Featured Post 1',
     date: '2024-07-11',
     excerpt: 'This is a mock featured post for testing purposes.',
-    thumbnail: '/images/default-thumbnail.jpg'
+    thumbnail: '/images/bingopolisthumbnail.png'
   },
   {
     slug: 'mock-featured-2',
     title: 'Mock Featured Post 2',
     date: '2024-07-12',
     excerpt: 'This is another mock featured post for testing purposes.',
-    thumbnail: '/images/default-thumbnail.jpg'
+    thumbnail: '/images/bingopolisthumbnail.pngg'
   }
 ];
 
