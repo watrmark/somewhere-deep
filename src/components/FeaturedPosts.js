@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import BlogPost from './BlogPost.js';
 
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? (process.env.REACT_APP_API_URL || '') 
+const API_URL = process.env.NODE_ENV === 'production'
+  ? (process.env.REACT_APP_API_URL || '')
   : 'http://localhost:5001';
 
 const mockFeaturedPosts = [
@@ -32,16 +32,14 @@ const FeaturedPosts = () => {
     const fetchFeaturedPosts = async () => {
       try {
         const response = await fetch(`${API_URL}/api/featured-posts`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
+        console.log('Fetched data:', data);
         setFeaturedPosts(data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Failed to fetch featured posts. Displaying mock data.");
+        setLoading(false);
+      } catch (error) {
+        console.error('Fetch error:', error);
+        setError(error.message);
         setFeaturedPosts(mockFeaturedPosts);
-      } finally {
         setLoading(false);
       }
     };

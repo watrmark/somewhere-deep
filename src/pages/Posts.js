@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
 
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? (process.env.REACT_APP_API_URL || '') 
+const API_URL = process.env.NODE_ENV === 'production'
+  ? (process.env.REACT_APP_API_URL || '')
   : 'http://localhost:5001';
 
 const mockPosts = [
@@ -32,16 +32,14 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(`${API_URL}/api/posts`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
+        console.log('Fetched data:', data);
         setPosts(data);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Failed to fetch posts. Displaying mock data.");
-        setPosts(mockPosts);
-      } finally {
+        setLoading(false);
+      } catch (error) {
+        console.error('Fetch error:', error);
+        setError(error.message);
+        setPosts(mockPosts); 
         setLoading(false);
       }
     };
@@ -59,7 +57,7 @@ const Posts = () => {
         <p>No posts found.</p>
       ) : (
         posts.map(post => (
-          <BlogPost 
+          <BlogPost
             key={post.slug}
             slug={post.slug}
             title={post.title}

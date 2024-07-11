@@ -24,7 +24,7 @@ app.use(cors());
 app.use(helmet());
 
 const buildPath = path.join(__dirname, BUILD_PATH);
-const postsPath = path.join(__dirname, POSTS_PATH);
+const postsPath = path.join(__dirname, '..', 'src', 'content', 'posts');
 
 console.log('Starting server...');
 console.log('Current directory:', process.cwd());
@@ -129,7 +129,7 @@ app.get('/api/featured-posts', (req, res) => {
         };
       })
       .filter(post => post.featured);
-    
+
     console.log('Featured posts:', posts);
     res.json(posts);
   } catch (error) {
@@ -143,3 +143,5 @@ app.get('/api/featured-posts', (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
+
+export default app;
