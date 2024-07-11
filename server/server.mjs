@@ -159,6 +159,7 @@ app.get('/api/featured-posts', (req, res) => {
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
+  console.log("catchall");
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
