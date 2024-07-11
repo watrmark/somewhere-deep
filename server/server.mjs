@@ -9,7 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-
+const cors = require('cors');
+app.use(cors());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
