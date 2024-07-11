@@ -55,7 +55,7 @@ const FeaturedPosts = () => {
       ) : (
         featuredPosts.map(post => (
           <BlogPost
-            key={post.slug}
+            key={post.id}
             slug={post.slug}
             title={post.title}
             date={post.date}
