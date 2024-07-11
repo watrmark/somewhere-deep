@@ -70,4 +70,6 @@ const FeaturedPosts = () => {
   );
 };
 
+console.log('API URL:', `${API_URL}/api/featured-posts`);
+
 export default FeaturedPosts;

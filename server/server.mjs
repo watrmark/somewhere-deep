@@ -70,8 +70,13 @@ app.get('/api/posts', (req, res) => {
 
     res.json(posts);
   } catch (error) {
-    console.error('Error reading posts:', error);
-    res.status(500).json({ error: 'Internal server error', details: error.message });
+    console.error('Fetch error:', error);
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      console.error('This might be a CORS or network issue');
+    }
+    setError(error.toString());
+    setFeaturedPosts(mockFeaturedPosts);
+    setLoading(false);
   }
 });
 
@@ -103,8 +108,13 @@ app.get('/api/posts/:slug', (req, res) => {
       thumbnail: data.thumbnail || '/images/default-thumbnail.jpg'
     });
   } catch (error) {
-    console.error(`Error reading file: ${filePath}`, error);
-    res.status(500).json({ error: 'Internal server error', details: error.message });
+    console.error('Fetch error:', error);
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      console.error('This might be a CORS or network issue');
+    }
+    setError(error.toString());
+    setFeaturedPosts(mockFeaturedPosts);
+    setLoading(false);
   }
 });
 
@@ -133,8 +143,16 @@ app.get('/api/featured-posts', (req, res) => {
     console.log('Featured posts:', posts);
     res.json(posts);
   } catch (error) {
+    console.error('Fetch error:', error);
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      console.error('This might be a CORS or network issue');
+    }
+    setError(error.toString());
+    setFeaturedPosts(mockFeaturedPosts);
+    setLoading(false);
     console.error('Error reading featured posts:', error);
-    res.status(500).json({ error: 'Internal server error', details: error.message });
+    res.status(500).json({ error: 'Internal server error', details: error.toString() });
+  
   }
 });
 

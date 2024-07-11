@@ -71,4 +71,6 @@ const Posts = () => {
   );
 };
 
+console.log('API URL:', `${API_URL}/api/posts`);
+
 export default Posts;
