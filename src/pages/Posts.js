@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
 
-const API_URL = process.env.NODE_ENV === 'production'
-  ? (process.env.REACT_APP_API_URL || '')
-  : 'http://localhost:5001';
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? (process.env.REACT_APP_API_URL || '') 
+  : '';
 
 const mockPosts = [
   {
