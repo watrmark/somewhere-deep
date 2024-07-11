@@ -1,166 +1,37 @@
-// server/server.mjs
-
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import matter from 'gray-matter';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import helmet from 'helmet';
-
-dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const PORT = process.env.PORT || 5001;
-const BUILD_PATH = process.env.BUILD_PATH || '../build';
-const POSTS_PATH = process.env.POSTS_PATH || '../src/content/posts';
 
 const app = express();
+const port = process.env.PORT || 5001;
 
-app.use(cors({ origin: true }));
-app.use(helmet());
+app.use(cors());
+app.use(express.json());
 
-const buildPath = path.join(__dirname, BUILD_PATH);
-const postsPath = path.join(__dirname, POSTS_PATH);
-
-
-console.log('Starting server...');
-console.log('Current directory:', process.cwd());
-console.log('__dirname:', __dirname);
-console.log('BUILD_PATH:', BUILD_PATH);
-console.log('POSTS_PATH:', POSTS_PATH);
-console.log('buildPath:', buildPath);
-console.log('postsPath:', postsPath);
-
-app.use((req, res, next) => {
-  console.log(`Received request: ${req.method} ${req.url}`);
-  next();
+// Test route
+app.get('/api/test', (req, res) => {
+  console.log('Received request to /api/test');
+  res.json({ message: 'API is working' });
 });
 
-if (!fs.existsSync(buildPath)) {
-  console.error(`Build directory not found: ${buildPath}`);
-  process.exit(1);
-}
-
-if (!fs.existsSync(postsPath)) {
-  console.error(`Posts directory not found: ${postsPath}`);
-  process.exit(1);
-}
-
-app.use(express.static(buildPath));
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
-
-// API route for all posts
+// Simple posts route
 app.get('/api/posts', (req, res) => {
-  console.log('Fetching all posts');
-  try {
-    const postFiles = fs.readdirSync(postsPath);
-    console.log('Post files:', postFiles);
-    const posts = postFiles
-      .filter(filename => filename.endsWith('.md'))
-      .map(filename => {
-        const filePath = path.join(postsPath, filename);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        const { data, content } = matter(fileContents);
-        return {
-          slug: filename.replace('.md', ''),
-          title: data.title || 'Untitled',
-          date: data.date || 'No date',
-          excerpt: data.excerpt || content.slice(0, 100) + '...',
-          thumbnail: data.thumbnail || '/images/default-thumbnail.jpg'
-        };
-      });
-
-    res.json(posts);
-  } catch (error) {
-    console.error('Fetch error:', error);
-    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-      console.error('This might be a CORS or network issue');
-    }
-    setError(error.toString());
-    setFeaturedPosts(mockFeaturedPosts);
-    setLoading(false);
-  }
+  console.log('Received request to /api/posts');
+  res.json([
+    { id: 1, title: 'Test Post 1', content: 'This is a test post.' },
+    { id: 2, title: 'Test Post 2', content: 'This is another test post.' }
+  ]);
 });
 
-app.get('/api/posts/:slug', (req, res) => {
-  const { slug } = req.params;
-  const filePath = path.join(postsPath, `${slug}.md`);
-
-  console.log(`Fetching post: ${slug}`);
-  console.log(`File path: ${filePath}`);
-
-  if (!fs.existsSync(filePath)) {
-    console.log(`Post not found: ${slug}`);
-    return res.status(404).json({ error: 'Post not found' });
-  }
-
-  try {
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
-
-    const contentLines = content.split('\n');
-    const contentWithoutTitle = contentLines[0].startsWith('# ') ?
-      contentLines.slice(1).join('\n') : content;
-
-    res.json({
-      slug,
-      title: data.title || 'Untitled',
-      date: data.date || 'No date',
-      content: contentWithoutTitle,
-      thumbnail: data.thumbnail || '/images/default-thumbnail.jpg'
-    });
-  } catch (error) {
-    console.error('Fetch error:', error);
-    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-      console.error('This might be a CORS or network issue');
-    }
-    setError(error.toString());
-    setFeaturedPosts(mockFeaturedPosts);
-    setLoading(false);
-  }
-});
-
+// Simple featured posts route
 app.get('/api/featured-posts', (req, res) => {
-  console.log('Fetching featured posts');
-  try {
-    const postFiles = fs.readdirSync(postsPath);
-    console.log('Post files:', postFiles);
-    const posts = postFiles
-      .filter(filename => filename.endsWith('.md'))
-      .map(filename => {
-        const filePath = path.join(postsPath, filename);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        const { data, content } = matter(fileContents);
-        return {
-          slug: filename.replace('.md', ''),
-          title: data.title || 'Untitled',
-          date: data.date || 'No date',
-          excerpt: data.excerpt || content.slice(0, 100) + '...',
-          thumbnail: data.thumbnail || '/images/default-thumbnail.jpg',
-          featured: data.featured || false
-        };
-      })
-      .filter(post => post.featured);
-
-    console.log('Featured posts:', posts);
-    res.json(posts);
-  } catch (error) {
-    console.error('Fetch error:', error);
-    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-      console.error('This might be a CORS or network issue');
-    }  
-  }
+  console.log('Received request to /api/featured-posts');
+  res.json([
+    { id: 1, title: 'Featured Test Post', content: 'This is a featured test post.' }
+  ]);
 });
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  console.log("catchall");
-  res.sendFile(path.join(buildPath, 'index.html'));
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 export default app;
