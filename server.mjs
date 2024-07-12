@@ -32,21 +32,24 @@ const getPosts = () => {
   });
 };
 
+// Use the router for /api routes
+app.use('/api', router);
+
 // Test route
-router.get('api/test', (req, res) => {
+router.get('/api/test', (req, res) => {
   console.log('Received request to /test');
   res.json({ message: 'API is working' });
 });
 
 // Posts route
-router.get('api/posts', (req, res) => {
+router.get('/api/posts', (req, res) => {
   console.log('Received request to /posts');
   const posts = getPosts();
   res.json(posts.map(({ content, ...rest }) => rest)); // Exclude content for list view
 });
 
 // Single post route
-router.get('api/posts/:slug', (req, res) => {
+router.get('/api/posts/:slug', (req, res) => {
   console.log(`Received request to /posts/${req.params.slug}`);
   const posts = getPosts();
   const post = posts.find(p => p.slug === req.params.slug);
@@ -58,15 +61,12 @@ router.get('api/posts/:slug', (req, res) => {
 });
 
 // Featured posts route
-router.get('api/featured-posts', (req, res) => {
+router.get('/api/featured-posts', (req, res) => {
   console.log('Received request to /featured-posts');
   const posts = getPosts();
   const featuredPosts = posts.filter(post => post.featured);
   res.json(featuredPosts.map(({ content, ...rest }) => rest)); // Exclude content for list view
 });
-
-// Use the router for /api routes
-app.use('/api', router);
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
