@@ -4,7 +4,7 @@ const { api } = services;
 
 export const fetchPosts = async () => {
     try {
-        const response = await api.get('/api/posts');
+        const response = await api.get('/posts');
         return response.data;
     } catch (error) {
         console.error('Error fetching posts:', error);
