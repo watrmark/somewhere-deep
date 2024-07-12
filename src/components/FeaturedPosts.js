@@ -1,25 +1,6 @@
-// src/components/FeaturedPosts.js
 import React, { useState, useEffect } from 'react';
 import BlogPost from './BlogPost.js';
-
-const API_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5001';
-
-const mockFeaturedPosts = [
-  {
-    slug: 'mock-featured-1',
-    title: 'Mock Featured Post 1',
-    date: '2024-07-11',
-    excerpt: 'This is a mock featured post for testing purposes.',
-    thumbnail: '/images/bingopolisthumbnail.png'
-  },
-  {
-    slug: 'mock-featured-2',
-    title: 'Mock Featured Post 2',
-    date: '2024-07-12',
-    excerpt: 'This is another mock featured post for testing purposes.',
-    thumbnail: '/images/bingopolisthumbnail.png'
-  }
-];
+import { fetchFeaturedPosts } from '../services/featuredPostServices.js';
 
 const FeaturedPosts = () => {
   const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -27,47 +8,47 @@ const FeaturedPosts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchFeaturedPosts = async () => {
+    const getFeaturedPosts = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/featured-posts`);
-        const data = await response.json();
-        console.log('Fetched data:', data);
+        const data = await fetchFeaturedPosts();
         setFeaturedPosts(data);
         setLoading(false);
       } catch (error) {
-        console.error('Fetch error:', error);
         setError(error.message);
-        setFeaturedPosts(mockFeaturedPosts);
+        setFeaturedPosts([]); // Set featured posts to an empty array in case of an error
         setLoading(false);
       }
     };
 
-    fetchFeaturedPosts();
+    getFeaturedPosts();
   }, []);
 
-  if (loading) return <div>Loading featured posts...</div>;
+  if (loading) {
+    return <div>Loading featured posts...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (featuredPosts.length === 0) {
+    return <p>No featured posts found.</p>;
+  }
 
   return (
     <div className="featured-posts">
-      {error && <div className="error-message">{error}</div>}
-      {featuredPosts.length === 0 ? (
-        <p>No featured posts found.</p>
-      ) : (
-        featuredPosts.map(post => (
-          <BlogPost
-            key={post.id}
-            slug={post.slug}
-            title={post.title}
-            date={post.date}
-            excerpt={post.excerpt}
-            thumbnail={post.thumbnail}
-          />
-        ))
-      )}
+      {featuredPosts.map(post => (
+        <BlogPost
+          key={post.id}
+          slug={post.slug}
+          title={post.title}
+          date={post.date}
+          excerpt={post.excerpt}
+          thumbnail={post.thumbnail}
+        />
+      ))}
     </div>
   );
 };
-
-console.log('API URL:', `${API_URL}/api/featured-posts`);
 
 export default FeaturedPosts;

@@ -10,7 +10,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 5001;
-const router = express.Router();
 
 app.use(cors());
 app.use(express.json());
@@ -32,25 +31,22 @@ const getPosts = () => {
   });
 };
 
-// Use the router for /api routes
-app.use('/api', router);
-
 // Test route
-router.get('/api/test', (req, res) => {
-  console.log('Received request to /test');
+app.get('/api/test', (req, res) => {
+  console.log('Received request to /api/test');
   res.json({ message: 'API is working' });
 });
 
 // Posts route
-router.get('/api/posts', (req, res) => {
-  console.log('Received request to /posts');
+app.get('/api/posts', (req, res) => {
+  console.log('Received request to /api/posts');
   const posts = getPosts();
   res.json(posts.map(({ content, ...rest }) => rest)); // Exclude content for list view
 });
 
 // Single post route
-router.get('/api/posts/:slug', (req, res) => {
-  console.log(`Received request to /posts/${req.params.slug}`);
+app.get('/api/posts/:slug', (req, res) => {
+  console.log(`Received request to /api/posts/${req.params.slug}`);
   const posts = getPosts();
   const post = posts.find(p => p.slug === req.params.slug);
   if (post) {
@@ -61,8 +57,8 @@ router.get('/api/posts/:slug', (req, res) => {
 });
 
 // Featured posts route
-router.get('/api/featured-posts', (req, res) => {
-  console.log('Received request to /featured-posts');
+app.get('/api/featured-posts', (req, res) => {
+  console.log('Received request to /api/featured-posts');
   const posts = getPosts();
   const featuredPosts = posts.filter(post => post.featured);
   res.json(featuredPosts.map(({ content, ...rest }) => rest)); // Exclude content for list view

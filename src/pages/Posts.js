@@ -1,6 +1,6 @@
-// src/pages/Posts.js
 import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
+import { fetchPosts } from '../services/postServices.js';
 
 const API_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5001';
 
@@ -27,23 +27,20 @@ const Posts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const getPosts = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/posts`);
-        const data = await response.json();
-        console.log('Fetched data:', data);
+        const data = await fetchPosts();
         setPosts(data);
         setLoading(false);
       } catch (error) {
-        console.error('Fetch error:', error);
         setError(error.message);
-        setPosts(mockPosts); 
         setLoading(false);
       }
     };
 
-    fetchPosts();
+    getPosts();
   }, []);
+
 
   if (loading) return <div>Loading posts...</div>;
 
