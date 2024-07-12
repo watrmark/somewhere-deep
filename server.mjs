@@ -38,7 +38,7 @@ app.get('/test', (req, res) => {
 });
 
 // Posts route
-app.get('/api/posts', (req, res) => {
+app.get('/posts', (req, res) => {
   console.log('Received request to /api/posts');
   const posts = getPosts();
   res.json(posts.map(({ content, ...rest }) => rest)); // Exclude content for list view
