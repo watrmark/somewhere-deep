@@ -33,20 +33,20 @@ const getPosts = () => {
 };
 
 // Test route
-router.get('/test', (req, res) => {
+router.get('api/test', (req, res) => {
   console.log('Received request to /test');
   res.json({ message: 'API is working' });
 });
 
 // Posts route
-router.get('/posts', (req, res) => {
+router.get('api/posts', (req, res) => {
   console.log('Received request to /posts');
   const posts = getPosts();
   res.json(posts.map(({ content, ...rest }) => rest)); // Exclude content for list view
 });
 
 // Single post route
-router.get('/posts/:slug', (req, res) => {
+router.get('api/posts/:slug', (req, res) => {
   console.log(`Received request to /posts/${req.params.slug}`);
   const posts = getPosts();
   const post = posts.find(p => p.slug === req.params.slug);
@@ -58,7 +58,7 @@ router.get('/posts/:slug', (req, res) => {
 });
 
 // Featured posts route
-router.get('/featured-posts', (req, res) => {
+router.get('api/featured-posts', (req, res) => {
   console.log('Received request to /featured-posts');
   const posts = getPosts();
   const featuredPosts = posts.filter(post => post.featured);
