@@ -11,11 +11,12 @@ const FeaturedPosts = () => {
     const getFeaturedPosts = async () => {
       try {
         const data = await fetchFeaturedPosts();
+        console.log('Featured Posts Data:', data);
         setFeaturedPosts(data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
-        setFeaturedPosts([]); // Set featured posts to an empty array in case of an error
+        setFeaturedPosts([]);
         setLoading(false);
       }
     };

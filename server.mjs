@@ -56,12 +56,12 @@ app.get('/posts/:slug', (req, res) => {
   }
 });
 
-// Featured posts route
 app.get('/featured-posts', (req, res) => {
-  console.log('Received request to /api/featured-posts');
+  console.log('Received request to /featured-posts');
   const posts = getPosts();
   const featuredPosts = posts.filter(post => post.featured);
-  res.json(featuredPosts.map(({ content, ...rest }) => rest)); // Exclude content for list view
+  console.log('Retrieved featured posts:', featuredPosts);
+  res.json(featuredPosts.map(({ content, ...rest }) => rest));
 });
 
 // Serve static files from the public directory
