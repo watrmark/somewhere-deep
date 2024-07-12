@@ -14,7 +14,7 @@ export const fetchPosts = async () => {
 
 export const fetchPostContent = async (slug) => {
     try {
-        const response = await api.get(`/api/posts/${slug}`);
+        const response = await api.get(`/posts/${slug}`);
         return response.data.content;
     } catch (error) {
         console.error(`Error fetching post content for slug ${slug}:`, error);
