@@ -32,7 +32,7 @@ const getPosts = () => {
 };
 
 // Test route
-app.get('/api/test', (req, res) => {
+app.get('/test', (req, res) => {
   console.log('Received request to /api/test');
   res.json({ message: 'API is working' });
 });
@@ -45,7 +45,7 @@ app.get('/api/posts', (req, res) => {
 });
 
 // Single post route
-app.get('/api/posts/:slug', (req, res) => {
+app.get('/posts/:slug', (req, res) => {
   console.log(`Received request to /api/posts/${req.params.slug}`);
   const posts = getPosts();
   const post = posts.find(p => p.slug === req.params.slug);
@@ -57,7 +57,7 @@ app.get('/api/posts/:slug', (req, res) => {
 });
 
 // Featured posts route
-app.get('/api/featured-posts', (req, res) => {
+app.get('/featured-posts', (req, res) => {
   console.log('Received request to /api/featured-posts');
   const posts = getPosts();
   const featuredPosts = posts.filter(post => post.featured);
