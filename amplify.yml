@@ -3,7 +3,8 @@ backend:
   phases:
     build:
       commands:
-        - '# Execute Amplify CLI with the helper script'
+        - export AWS_ACCESS_KEY_ID=$AMPLIFY_ACCESS_KEY_ID
+        - export AWS_SECRET_ACCESS_KEY=$AMPLIFY_SECRET_ACCESS_KEY
         - amplifyPush --simple
 frontend:
   phases:
