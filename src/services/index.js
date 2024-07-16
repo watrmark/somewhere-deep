@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-const baseURL = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5001/api';
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? '/api'  // Use relative path in production
+  : 'https://z5xrvtgto5.execute-api.us-east-2.amazonaws.com/dev';  // Use your actual API Gateway URL
 
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: API_URL,
 });
 
-export default { api, baseURL };
+export default { api, API_URL };

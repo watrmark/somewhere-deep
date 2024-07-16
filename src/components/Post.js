@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? '' // Use empty string for relative URLs in production
-  : 'http://localhost:5001'; // Use this for local development
+import { fetchPostContent } from '../services/postServices';
 
 const Post = () => {
   const [post, setPost] = useState(null);
@@ -13,31 +10,36 @@ const Post = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    if (slug) {
-      fetch(`${API_URL}/api/posts/${slug}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Post not found');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setPost(data);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error('Fetch error:', err);
-          setError(err.message);
-          setLoading(false);
+    const getPost = async () => {
+      try {
+        const data = await fetchPostContent(slug);
+        const frontmatter = data.content.split('---')[1].trim().split('\n');
+        const content = data.content.split('---').slice(2).join('---').trim();
+        
+        const getField = (field) => {
+          const line = frontmatter.find(line => line.startsWith(`${field}:`));
+          return line ? line.replace(`${field}:`, '').trim().replace(/^["']|["']$/g, '') : '';
+        };
+
+        setPost({
+          title: getField('title'),
+          date: getField('date'),
+          thumbnail: getField('thumbnail'),
+          content: content
         });
-    } else {
-      setError('No slug provided');
-      setLoading(false);
-    }
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching post:', err);
+        setError('Failed to fetch post. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    getPost();
   }, [slug]);
 
   if (loading) return <div>Loading post...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div>{error}</div>;
   if (!post) return <div>Post not found</div>;
 
   return (

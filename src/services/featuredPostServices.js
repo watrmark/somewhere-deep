@@ -1,11 +1,11 @@
-import services from "./index.js";
-
-const { api } = services;
+import { fetchPosts } from './postServices';
 
 export const fetchFeaturedPosts = async () => {
   try {
-    const response = await api.get('/featured-posts');
-    return response.data;
+    const posts = await fetchPosts();
+    return posts.filter(post => 
+      post.content.includes('featured: true') || post.content.includes('featured: yes')
+    );
   } catch (error) {
     console.error('Error fetching featured posts:', error);
     throw error;

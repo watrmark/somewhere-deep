@@ -14,7 +14,8 @@ const Posts = () => {
         setPosts(data);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        console.error('Error fetching posts:', error);
+        setError('Failed to fetch posts. Please try again later.');
         setLoading(false);
       }
     };
@@ -23,24 +24,37 @@ const Posts = () => {
   }, []);
 
   if (loading) return <div>Loading posts...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="posts-list">
       <h1>All Posts</h1>
-      {error && <div className="error-message">{error}</div>}
       {posts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
-        posts.map(post => (
-          <BlogPost
-            key={post.id}
-            slug={post.slug}
-            title={post.title}
-            date={post.date}
-            excerpt={post.excerpt}
-            thumbnail={post.thumbnail}
-          />
-        ))
+        posts.map(post => {
+          const frontmatter = post.content.trim().split('\n');
+          const getField = (field) => {
+            const line = frontmatter.find(line => line.startsWith(`${field}:`));
+            return line ? line.replace(`${field}:`, '').trim().replace(/^["']|["']$/g, '') : '';
+          };
+        
+          const title = getField('title') || 'Untitled';
+          const date = getField('date') || 'No date';
+          const thumbnail = getField('thumbnail') || '';
+          const excerpt = post.content.split('---')[2]?.trim().substring(0, 150) + '...' || '';
+        
+          return (
+            <BlogPost
+              key={post.slug}
+              slug={post.slug}
+              title={title}
+              date={date}
+              excerpt={excerpt}
+              thumbnail={thumbnail}
+            />
+          );
+        })
       )}
     </div>
   );
