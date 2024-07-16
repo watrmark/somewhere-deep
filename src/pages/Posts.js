@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
 import { fetchPosts } from '../services/postServices.js';
 
-const Posts = () => {
+const Posts = () => { 
+  
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
