@@ -15,7 +15,7 @@
       "function": {
         "getPosts": {
           "deploymentBucketName": "amplify-somewheredeep-dev-98d32-deployment",
-          "s3Key": "amplify-builds/getPosts-6e315457594a69767144-build.zip"
+          "s3Key": "amplify-builds/getPosts-61436261387639755635-build.zip"
         }
       },
       "api": {
