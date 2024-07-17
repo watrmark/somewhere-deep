@@ -66,7 +66,7 @@ const Post = () => {
       <p className="date">{post.date}</p>
       <ReactMarkdown
         components={{
-          img: ({node, ...props}) => <img {...props} src={resolveImagePath(props.src)} />
+          img: ({node, ...props}) => <img {...props} src={resolveImagePath(props.src)} alt={props.alt || ''}/>
         }}
       >
         {post.content}
