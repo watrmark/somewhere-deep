@@ -1,7 +1,7 @@
 ---
 title: "ALO-3000 Dating Sim"
 date: "2023-05-15"
-thumbnail: images/ALO3000flirt.png
+thumbnail: images/alo3000flirtthumbnail.png
 featured: true
 ---
 
