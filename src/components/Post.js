@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { fetchPostContent } from '../services/postServices';
+
+const parseFrontmatter = (markdown) => {
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
+  const match = markdown.match(frontmatterRegex);
+  
+  if (!match) return { content: markdown };
+
+  const frontmatter = match[1];
+  const content = markdown.replace(frontmatterRegex, '');
+
+  const metadata = {};
+  frontmatter.split('\n').forEach(line => {
+    const [key, ...value] = line.split(':');
+    if (key && value) metadata[key.trim()] = value.join(':').trim();
+  });
+
+  return { ...metadata, content };
+};
 
 const Post = () => {
   const [post, setPost] = useState(null);
@@ -10,23 +27,12 @@ const Post = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    const getPost = async () => {
+    const fetchPost = async () => {
       try {
-        const data = await fetchPostContent(slug);
-        const frontmatter = data.content.split('---')[1].trim().split('\n');
-        const content = data.content.split('---').slice(2).join('---').trim();
-        
-        const getField = (field) => {
-          const line = frontmatter.find(line => line.startsWith(`${field}:`));
-          return line ? line.replace(`${field}:`, '').trim().replace(/^["']|["']$/g, '') : '';
-        };
-
-        setPost({
-          title: getField('title'),
-          date: getField('date'),
-          thumbnail: getField('thumbnail'),
-          content: content
-        });
+        const res = await fetch(`/content/${slug}.md`);
+        const markdown = await res.text();
+        const parsedPost = parseFrontmatter(markdown);
+        setPost(parsedPost);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching post:', err);
@@ -35,21 +41,36 @@ const Post = () => {
       }
     };
 
-    getPost();
+    fetchPost();
   }, [slug]);
 
   if (loading) return <div>Loading post...</div>;
   if (error) return <div>{error}</div>;
   if (!post) return <div>Post not found</div>;
 
+  // Function to resolve image paths
+  const resolveImagePath = (path) => {
+    if (path.startsWith('/')) {
+      return path; // Absolute path, use as is
+    } else {
+      return `/${path}`; // Relative path, add leading slash
+    }
+  };
+
   return (
     <article className="full-post">
       {post.thumbnail && (
-        <img src={post.thumbnail} alt={post.title} className="post-thumbnail" />
+        <img src={resolveImagePath(post.thumbnail)} alt={post.title} className="post-thumbnail" />
       )}
       <h1>{post.title}</h1>
       <p className="date">{post.date}</p>
-      <ReactMarkdown>{post.content}</ReactMarkdown>
+      <ReactMarkdown
+        components={{
+          img: ({node, ...props}) => <img {...props} src={resolveImagePath(props.src)} />
+        }}
+      >
+        {post.content}
+      </ReactMarkdown>
     </article>
   );
 };

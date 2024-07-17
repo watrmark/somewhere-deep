@@ -1,61 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import BlogPost from '../components/BlogPost.js';
-import { fetchPosts } from '../services/postServices.js';
 
-const Posts = () => { 
+const parseFrontmatter = (markdown) => {
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
+  const match = markdown.match(frontmatterRegex);
   
+  if (!match) return { content: markdown };
+
+  const frontmatter = match[1];
+  const content = markdown.replace(frontmatterRegex, '');
+
+  const metadata = {};
+  frontmatter.split('\n').forEach(line => {
+    const [key, ...value] = line.split(':');
+    if (key && value) metadata[key.trim()] = value.join(':').trim();
+  });
+
+  return { ...metadata, content };
+};
+
+const Posts = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const data = await fetchPosts();
-        setPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-        setError('Failed to fetch posts. Please try again later.');
-        setLoading(false);
-      }
+    const fetchPosts = async () => {
+      const listRes = await fetch('/postlist.json');
+      const { posts: fileList } = await listRes.json();
+
+      const postPromises = fileList.map(async file => {
+        const res = await fetch(`/content/${file}`);
+        const markdown = await res.text();
+        const { content, ...frontmatter } = parseFrontmatter(markdown);
+        return {
+          slug: file.replace('.md', ''),
+          ...frontmatter,
+          content
+        };
+      });
+
+      const fetchedPosts = await Promise.all(postPromises);
+      setPosts(fetchedPosts);
     };
 
-    getPosts();
+    fetchPosts();
   }, []);
-
-  if (loading) return <div>Loading posts...</div>;
-  if (error) return <div>{error}</div>;
 
   return (
     <div className="posts-list">
       <h1>All Posts</h1>
       {posts.length === 0 ? (
-        <p>No posts found.</p>
+        <p>Loading posts...</p>
       ) : (
-        posts.map(post => {
-          const frontmatter = post.content.trim().split('\n');
-          const getField = (field) => {
-            const line = frontmatter.find(line => line.startsWith(`${field}:`));
-            return line ? line.replace(`${field}:`, '').trim().replace(/^["']|["']$/g, '') : '';
-          };
-        
-          const title = getField('title') || 'Untitled';
-          const date = getField('date') || 'No date';
-          const thumbnail = getField('thumbnail') || '';
-          const excerpt = post.content.split('---')[2]?.trim().substring(0, 150) + '...' || '';
-        
-          return (
-            <BlogPost
-              key={post.slug}
-              slug={post.slug}
-              title={title}
-              date={date}
-              excerpt={excerpt}
-              thumbnail={thumbnail}
-            />
-          );
-        })
+        posts.map(post => (
+          <BlogPost
+            key={post.slug}
+            slug={post.slug}
+            title={post.title || 'Untitled'}
+            date={post.date || 'No date'}
+            excerpt={post.content.substring(0, 150) + '...'}
+            thumbnail={post.thumbnail || ''}
+          />
+        ))
       )}
     </div>
   );

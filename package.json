@@ -22,7 +22,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "generate-post-list": "node generatePostList.js",
+    "prebuild": "npm run generate-post-list"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +46,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.1.1",
+    "raw-loader": "^4.0.2",
+    "react-app-rewired": "^2.2.1"
   }
 }

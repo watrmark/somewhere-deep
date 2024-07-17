@@ -1,12 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'; // Add this import
+import PropTypes from 'prop-types';
+
+const resolveImagePath = (path) => {
+  if (path.startsWith('/')) {
+    return path; // Absolute path, use as is
+  } else {
+    return `/${path}`; // Relative path, add leading slash
+  }
+};
 
 const BlogPost = ({ slug, title, date, excerpt, thumbnail }) => {
   return (
     <Link to={`/post/${slug}`} className="blog-post-summary">
       <div className="blog-thumbnail-container">
-        {thumbnail && <img src={`${thumbnail}`} alt={title} className="blog-thumbnail" />}
+        {thumbnail && <img src={resolveImagePath(thumbnail)} alt={title} className="blog-thumbnail" />}
       </div>
       <article className="blog-post-content">
         <div className="blog-post-info">
