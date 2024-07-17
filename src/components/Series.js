@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Series = () => {
-    const[_isOpen, _setIsOpen] = useState(false);
+    // const[_isOpen, _setIsOpen] = useState(false);
 
     return (
         <div id="series-content" className="section-content">

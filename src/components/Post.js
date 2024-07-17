@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 const parseFrontmatter = (markdown) => {
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
   const match = markdown.match(frontmatterRegex);
-  
+
   if (!match) return { content: markdown };
 
   const frontmatter = match[1];
@@ -66,7 +66,7 @@ const Post = () => {
       <p className="date">{post.date}</p>
       <ReactMarkdown
         components={{
-          img: ({node, ...props}) => <img {...props} src={resolveImagePath(props.src)} alt={props.alt || ''}/>
+          img: ({ node, ...props }) => <img {...props} alt={props.alt || ''} src={resolveImagePath(props.src)} />
         }}
       >
         {post.content}
