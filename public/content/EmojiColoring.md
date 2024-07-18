@@ -1,6 +1,6 @@
 ---
-title: "Coloring With Emojis"
-date: "2024-06-09"
+title: Coloring With Emojis
+date: 2024-06-09
 thumbnail: images/emojicoloringthumbnail.png
 featured: true
 ---

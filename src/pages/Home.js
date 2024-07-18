@@ -11,9 +11,9 @@ const Home = () => {
       <CollapsibleSection title="About" defaultOpen={true}>
         <About />
       </CollapsibleSection>
-      <CollapsibleSection title="Series">
+      {/* <CollapsibleSection title="Series">
         <Series />
-      </CollapsibleSection>
+      </CollapsibleSection> */}
       <CollapsibleSection title="Featured Posts">
         <FeaturedPosts />
       </CollapsibleSection>

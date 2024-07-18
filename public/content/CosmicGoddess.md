@@ -1,6 +1,6 @@
 ---
-title: "Cosmic Goddess"
-date: "2024-06-09"
+title: Cosmic Goddess
+date: 2024-06-09
 thumbnail: images/cosmicgoddessthumbnail.png
 featured: true
 ---

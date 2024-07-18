@@ -31,7 +31,7 @@ const FeaturedPosts = () => {
         const { posts: fileList } = await listRes.json();
 
         const postPromises = fileList.map(async file => {
-          const res = await fetch(`/content/${file}`);
+          const res = await fetch(`${process.env.PUBLIC_URL}/content/${file}`);
           const markdown = await res.text();
           const parsedPost = parseFrontmatter(markdown);
           return {
