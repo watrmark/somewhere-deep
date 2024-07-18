@@ -1,6 +1,6 @@
 ---
-title: "Memetic Schematica"
-date: "2023-05-15"
+title: Memetic Schematica
+date: 2023-05-15
 thumbnail: images/memeticschematicathumbnail.png
 featured: true
 ---

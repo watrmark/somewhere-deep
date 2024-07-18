@@ -1,6 +1,6 @@
 ---
-title: "The Great Catquisition"
-date: "2024-06-09"
+title: The Great Catquisition
+date: 2024-06-09
 thumbnail: images/c35sonnetcatmodethumbnail.png
 featured: true
 ---

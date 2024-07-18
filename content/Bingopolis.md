@@ -1,6 +1,6 @@
 ---
-title: "Bingopolis"
-date: "2023-05-15"
+title: Bingopolis
+date: 2023-05-15
 thumbnail: images/bingopolisthumbnail.png
 featured: true
 ---
