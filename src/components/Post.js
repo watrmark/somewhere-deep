@@ -48,25 +48,16 @@ const Post = () => {
   if (error) return <div>{error}</div>;
   if (!post) return <div>Post not found</div>;
 
-  // Function to resolve image paths
-  const resolveImagePath = (path) => {
-    if (path.startsWith('/')) {
-      return `${process.env.PUBLIC_URL}${path}`;
-    } else {
-      return `${process.env.PUBLIC_URL}/${path}`;
-    }
-  };
-
   return (
     <article className="full-post">
       {post.thumbnail && (
-        <img src={resolveImagePath(post.thumbnail)} alt={post.title} className="post-thumbnail" />
+        <img src={`${process.env.PUBLIC_URL}/${post.thumbnail}`} alt={post.title} className="post-thumbnail" />
       )}
       <h1>{post.title}</h1>
       <p className="date">{post.date}</p>
       <ReactMarkdown
         components={{
-          img: ({ node, ...props }) => <img {...props} alt={props.alt || ''} src={resolveImagePath(props.src)} />
+          img: ({ node, ...props }) => <img {...props} alt={props.alt || ''} src={(props.src)} />
         }}
       >
         {post.content}

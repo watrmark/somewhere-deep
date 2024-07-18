@@ -4,7 +4,7 @@ import BlogPost from '../components/BlogPost.js';
 const parseFrontmatter = (markdown) => {
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
   const match = markdown.match(frontmatterRegex);
-  
+
   if (!match) return { content: markdown };
 
   const frontmatter = match[1];
@@ -24,7 +24,7 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const listRes = await fetch('/postlist.json');
+      const listRes = await fetch(`${process.env.PUBLIC_URL}/postlist.json`);
       const { posts: fileList } = await listRes.json();
 
       const postPromises = fileList.map(async file => {

@@ -2,19 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const resolveImagePath = (path) => {
-  if (path.startsWith('/')) {
-    return `${process.env.PUBLIC_URL}${path}`;
-  } else {
-    return `${process.env.PUBLIC_URL}/${path}`;
-  }
-};
 
 const BlogPost = ({ slug, title, date, excerpt, thumbnail }) => {
   return (
     <Link to={`/post/${slug}`} className="blog-post-summary">
       <div className="blog-thumbnail-container">
-        {thumbnail && <img src={resolveImagePath(thumbnail)} alt={title} className="blog-thumbnail" />}
+        {thumbnail && <img src={`${process.env.PUBLIC_URL}/${thumbnail}`} alt={title} className="blog-thumbnail" />}
       </div>
       <article className="blog-post-content">
         <div className="blog-post-info">
