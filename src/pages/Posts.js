@@ -24,7 +24,7 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const listRes = await fetch(`${process.env.PUBLIC_URL}/postlist.json`);
+      const listRes = await fetch(`${process.env.PUBLIC_URL}/postList.json`);
       const { posts: fileList } = await listRes.json();
 
       const postPromises = fileList.map(async file => {
