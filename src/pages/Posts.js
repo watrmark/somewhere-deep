@@ -24,11 +24,11 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const listRes = await fetch(`${process.env.PUBLIC_URL}/postList.json`);
+      const listRes = await fetch('/postList.json');
       const { posts: fileList } = await listRes.json();
 
       const postPromises = fileList.map(async file => {
-        const res = await fetch(`${process.env.PUBLIC_URL}/content/${file}`);
+        const res = await fetch(`/content/${file}`);
         const markdown = await res.text();
         const { content, ...frontmatter } = parseFrontmatter(markdown);
         return {

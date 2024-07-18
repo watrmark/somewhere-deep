@@ -29,7 +29,7 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${process.env.PUBLIC_URL}/content/${slug}.md`);
+        const res = await fetch(`/content/${slug}.md`);
         const markdown = await res.text();
         const parsedPost = parseFrontmatter(markdown);
         setPost(parsedPost);
@@ -51,7 +51,7 @@ const Post = () => {
   return (
     <article className="full-post">
       {post.thumbnail && (
-        <img src={`${process.env.PUBLIC_URL}/${post.thumbnail}`} alt={post.title} className="post-thumbnail" />
+        <img src={`/${post.thumbnail}`} alt={post.title} className="post-thumbnail" />
       )}
       <h1>{post.title}</h1>
       <p className="date">{post.date}</p>
