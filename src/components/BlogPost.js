@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const resolveImagePath = (path) => {
   if (path.startsWith('/')) {
-    return path; // Absolute path, use as is
+    return `${process.env.PUBLIC_URL}${path}`;
   } else {
-    return `/${path}`; // Relative path, add leading slash
+    return `${process.env.PUBLIC_URL}/${path}`;
   }
 };
 
