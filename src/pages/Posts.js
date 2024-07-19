@@ -24,24 +24,48 @@ const Posts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const listRes = await fetch('/postList.json');
-      const { posts: fileList } = await listRes.json();
-
-      const postPromises = fileList.map(async file => {
-        const res = await fetch(`/content/${file}`);
-        const markdown = await res.text();
-        const { content, ...frontmatter } = parseFrontmatter(markdown);
-        return {
-          slug: file.replace('.md', ''),
-          ...frontmatter,
-          content
-        };
-      });
-
-      const fetchedPosts = await Promise.all(postPromises);
-      setPosts(fetchedPosts);
+      try {
+        console.log('Fetching postList.json');
+        const listRes = await fetch('/postList.json');
+        if (!listRes.ok) {
+          throw new Error(`Failed to fetch postList.json: ${listRes.status} ${listRes.statusText}`);
+        }
+        const data = await listRes.json();
+        console.log('postList.json data:', data);
+  
+        const { posts: fileList } = data;
+        console.log('File list:', fileList);
+  
+        const postPromises = fileList.map(async file => {
+          console.log(`Fetching content for: ${file}`);
+          try {
+            const res = await fetch(`/content/${file}`);
+            if (!res.ok) {
+              throw new Error(`Failed to fetch ${file}: ${res.status} ${res.statusText}`);
+            }
+            const markdown = await res.text();
+            console.log(`Markdown content for ${file} (first 100 chars):`, markdown.substring(0, 100));
+            const { content, ...frontmatter } = parseFrontmatter(markdown);
+            console.log(`Parsed frontmatter for ${file}:`, frontmatter);
+            return {
+              slug: file.replace('.md', ''),
+              ...frontmatter,
+              content
+            };
+          } catch (error) {
+            console.error(`Error fetching ${file}:`, error);
+            return null; // or handle the error as appropriate for your app
+          }
+        });
+  
+        const fetchedPosts = await Promise.all(postPromises);
+        console.log('All fetched posts:', fetchedPosts);
+        setPosts(fetchedPosts.filter(post => post !== null)); // Remove any null entries from failed fetches
+      } catch (error) {
+        console.error('Error in fetchPosts:', error);
+      }
     };
-
+  
     fetchPosts();
   }, []);
 
