@@ -1,7 +1,7 @@
 import matter from 'gray-matter';
 
 const importAll = (r) => r.keys().map(r);
-const markdownFiles = importAll(require.context('../posts', false, /\.md$/))
+const markdownFiles = importAll(require.context('../browsing', false, /\.md$/))
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
 export const getAllPosts = () => {
