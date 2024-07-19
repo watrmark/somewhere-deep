@@ -23,27 +23,46 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    const fetchWithFallback = async (path) => {
+      console.log(`Fetching ${path}`);
+      try {
+        const res = await fetch(path);
+        if (!res.ok) {
+          console.error(`Failed to fetch ${path}: ${res.status} ${res.statusText}`);
+          throw new Error(`Failed to fetch ${path}`);
+        }
+        return await res.text();
+      } catch (error) {
+        console.error(`Error fetching ${path}, trying without extension`);
+        const fallbackPath = path.replace('.md', '');
+        console.log(`Fetching ${fallbackPath}`);
+        const res = await fetch(fallbackPath);
+        if (!res.ok) {
+          console.error(`Failed to fetch ${fallbackPath}: ${res.status} ${res.statusText}`);
+          throw new Error(`Failed to fetch ${fallbackPath}`);
+        }
+        return await res.text();
+      }
+    };
+
     const fetchPosts = async () => {
       try {
         console.log('Fetching postList.json');
-        const listRes = await fetch('/postList.json');
+        const listRes = await fetch(`${process.env.PUBLIC_URL}/postList.json`);
         if (!listRes.ok) {
-          throw new Error(`Failed to fetch postList.json: ${listRes.status} ${listRes.statusText}`);
+          console.error(`Failed to fetch postList.json: ${listRes.status} ${listRes.statusText}`);
+          throw new Error(`Failed to fetch postList.json`);
         }
         const data = await listRes.json();
         console.log('postList.json data:', data);
-  
+
         const { posts: fileList } = data;
         console.log('File list:', fileList);
-  
+
         const postPromises = fileList.map(async file => {
           console.log(`Fetching content for: ${file}`);
           try {
-            const res = await fetch(`${process.env.PUBLIC_URL}/${file}.md`);
-            if (!res.ok) {
-              throw new Error(`Failed to fetch ${file}: ${res.status} ${res.statusText}`);
-            }
-            const markdown = await res.text();
+            const markdown = await fetchWithFallback(`${process.env.PUBLIC_URL}/content/${file}`);
             console.log(`Markdown content for ${file} (first 100 chars):`, markdown.substring(0, 100));
             const { content, ...frontmatter } = parseFrontmatter(markdown);
             console.log(`Parsed frontmatter for ${file}:`, frontmatter);
@@ -54,18 +73,18 @@ const Posts = () => {
             };
           } catch (error) {
             console.error(`Error fetching ${file}:`, error);
-            return null; // or handle the error as appropriate for your app
+            return null;
           }
         });
-  
+
         const fetchedPosts = await Promise.all(postPromises);
         console.log('All fetched posts:', fetchedPosts);
-        setPosts(fetchedPosts.filter(post => post !== null)); // Remove any null entries from failed fetches
+        setPosts(fetchedPosts.filter(post => post !== null));
       } catch (error) {
         console.error('Error in fetchPosts:', error);
       }
     };
-  
+
     fetchPosts();
   }, []);
 
