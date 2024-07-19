@@ -39,7 +39,7 @@ const Posts = () => {
         const postPromises = fileList.map(async file => {
           console.log(`Fetching content for: ${file}`);
           try {
-            const res = await fetch(`/${file}`);
+            const res = await fetch(`${process.env.PUBLIC_URL}/${file}`);
             if (!res.ok) {
               throw new Error(`Failed to fetch ${file}: ${res.status} ${res.statusText}`);
             }
@@ -48,7 +48,7 @@ const Posts = () => {
             const { content, ...frontmatter } = parseFrontmatter(markdown);
             console.log(`Parsed frontmatter for ${file}:`, frontmatter);
             return {
-              slug: file.replace('.md', ''),
+              slug: file.replace('.md', '').replace('content/', ''),
               ...frontmatter,
               content
             };
