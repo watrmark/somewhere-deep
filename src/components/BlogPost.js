@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const BlogPost = ({ slug, title, date, excerpt, thumbnail }) => {
   return (
-    <Link to={`/posts/${slug}`} className="blog-post-summary">
+    <Link to={`/reading/${slug}`} className="blog-post-summary">
       <div className="blog-thumbnail-container">
         {thumbnail && <img src={`/${thumbnail}`} alt={title} className="blog-thumbnail" />}
       </div>

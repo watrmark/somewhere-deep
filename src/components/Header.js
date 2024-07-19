@@ -8,7 +8,7 @@ const Header = () => {
       <h1 id="glitch-title">s̶̢̼̭̓͝o̸̭͆̈̊m̴̩̜͚̌ĕ̸̠̫̉w̵̪̲̃̀ĥ̷̲̫́ĕ̸̢͓͖r̸̤̖̊e̵̥̎ ̷̙̘̮̽̇d̷̺̽ȅ̷̩͎͙̀̉e̶̦̰̾̾̈́p̷͕̹͐͘</h1>
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/posts">Posts</Link>
+        <Link to="/browsing">Posts</Link>
       </nav>
     </header>
   );
