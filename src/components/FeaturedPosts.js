@@ -27,11 +27,11 @@ const FeaturedPosts = () => {
   useEffect(() => {
     const fetchFeaturedPosts = async () => {
       try {
-        const listRes = await fetch('/postList.json');
+        const listRes = await fetch(`${process.env.PUBLIC_URL}/postList.json`);
         const { posts: fileList } = await listRes.json();
 
         const postPromises = fileList.map(async file => {
-          const res = await fetch(`/${file}`);
+          const res = await fetch(`${process.env.PUBLIC_URL}/content/${file}`);
           const markdown = await res.text();
           const parsedPost = parseFrontmatter(markdown);
           return {

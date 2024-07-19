@@ -62,12 +62,12 @@ const Posts = () => {
         const postPromises = fileList.map(async file => {
           console.log(`Fetching content for: ${file}`);
           try {
-            const markdown = await fetchWithFallback(`${process.env.PUBLIC_URL}/${file}`);
+            const markdown = await fetchWithFallback(`${process.env.PUBLIC_URL}/content/${file}`);
             console.log(`Markdown content for ${file} (first 100 chars):`, markdown.substring(0, 100));
             const { content, ...frontmatter } = parseFrontmatter(markdown);
             console.log(`Parsed frontmatter for ${file}:`, frontmatter);
             return {
-              slug: file.replace('.md', '').replace('content/', ''),
+              slug: file.replace('.md', ''),
               ...frontmatter,
               content
             };
