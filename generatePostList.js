@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const contentDir = path.join(__dirname, 'public', 'posts');
+const contentDir = path.join(__dirname, 'public', 'content');
 const outputFile = path.join(__dirname, 'public', 'postList.json');
 
 const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
