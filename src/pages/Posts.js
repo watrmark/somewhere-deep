@@ -39,7 +39,7 @@ const Posts = () => {
         const postPromises = fileList.map(async file => {
           console.log(`Fetching content for: ${file}`);
           try {
-            const res = await fetch(`${process.env.PUBLIC_URL}/${file}`);
+            const res = await fetch(`${process.env.PUBLIC_URL}/${file}.md`);
             if (!res.ok) {
               throw new Error(`Failed to fetch ${file}: ${res.status} ${res.statusText}`);
             }
