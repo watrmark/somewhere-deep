@@ -7,7 +7,7 @@ const outputFile = path.join(__dirname, 'public', 'postList.json');
 const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
 
 const postList = {
-  posts: files.map(file => `${file.replace('.md', '')}`)  // Add 'content/' prefix here
+  posts: files.map(file => `${file}`)
 };
 
 fs.writeFileSync(outputFile, JSON.stringify(postList, null, 2));
