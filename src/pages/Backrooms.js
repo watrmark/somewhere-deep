@@ -141,14 +141,14 @@ const Backrooms = () => {
     fetchConversations();
   }, []);
 
-  return (
-    <div className="backrooms">
+return (
+    <div className="backrooms-section">  {/* Add this class */}
       <h1>Backrooms</h1>
       {Object.entries(conversations).length === 0 ? (
         <p>Loading conversations...</p>
       ) : (
         Object.entries(conversations).map(([dyad, convs]) => (
-          <CollapsibleSection key={dyad} title={dyad}>
+          <CollapsibleSection key={dyad} title={dyad} className="backrooms-dyad"> 
             <div className="conversation-list">
               {convs.map(conv => (
                 <div key={conv.slug} className="conversation-entry">
@@ -163,6 +163,8 @@ const Backrooms = () => {
       )}
     </div>
   );
+  
 };
 
 export default Backrooms;
+
