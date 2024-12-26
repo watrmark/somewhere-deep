@@ -27,7 +27,8 @@ const BackroomsConversation = () => {
 
   return (
     <div className="backrooms-conversation">
-      <h1>Lurking In: {slug}</h1>
+      <h1>{slug}</h1>
+      <br/>
       <div className="conversation-content">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
