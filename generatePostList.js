@@ -1,15 +1,32 @@
 const fs = require('fs');
 const path = require('path');
 
-const contentDir = path.join(__dirname, 'public', 'content');
-const outputFile = path.join(__dirname, 'public', 'postList.json');
+// Generate posts list
+const postsDir = path.join(__dirname, 'public', 'content/posts');
+const postsOutputFile = path.join(__dirname, 'public', 'postList.json');
 
-const files = fs.readdirSync(contentDir).filter(file => file.endsWith('.md'));
-
+const postFiles = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
 const postList = {
-  posts: files.map(file => `${file}`)
+  posts: postFiles.map(file => `${file}`)
 };
 
-fs.writeFileSync(outputFile, JSON.stringify(postList, null, 2));
+fs.writeFileSync(postsOutputFile, JSON.stringify(postList, null, 2));
 
-console.log('postList.json generated successfully.');
+// Generate backrooms list
+const backroomsDir = path.join(__dirname, 'public', 'content/backrooms');
+const backroomsOutputFile = path.join(__dirname, 'public', 'backroomsList.json');
+
+const dyads = {};
+fs.readdirSync(backroomsDir).forEach(dyad => {
+  const dyadPath = path.join(backroomsDir, dyad);
+  if (fs.statSync(dyadPath).isDirectory()) {
+    const conversations = fs.readdirSync(dyadPath)
+      .filter(file => file.endsWith('.md'));
+    dyads[dyad] = conversations;
+  }
+});
+
+const backroomsList = { dyads };
+fs.writeFileSync(backroomsOutputFile, JSON.stringify(backroomsList, null, 2));
+
+console.log('postList.json and backroomsList.json generated successfully.');

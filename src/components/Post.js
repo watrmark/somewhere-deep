@@ -29,7 +29,7 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/content/${slug}.md`);
+        const res = await fetch(`/content/posts/${slug}.md`);
         const markdown = await res.text();
         const parsedPost = parseFrontmatter(markdown);
         setPost(parsedPost);
