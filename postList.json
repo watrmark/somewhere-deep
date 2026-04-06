@@ -1,5 +1,5 @@
 {
-  "posts": [
+  "oldPosts": [
     "ALO3000Flirting.md",
     "AlephOS.md",
     "BIONCILLATION_OVERRIDE.md",
@@ -14,5 +14,8 @@
     "metaphysical_cycle.md",
     "no_dwelling.md",
     "vamPiric_gNosis.md"
+  ],
+  "newPosts": [
+    "Conditional Gates and Patches.md"
   ]
 }
