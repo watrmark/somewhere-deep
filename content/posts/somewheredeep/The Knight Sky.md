@@ -1,4 +1,4 @@
-![[theknightsky.png]]
+![](/content/posts/somewheredeep/theknightsky.png)
 
 Knightian uncertainty is a form of uncertainty that resists quantification; your unknown unknowns. 
 
